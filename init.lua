@@ -6,14 +6,25 @@ vim.g.mapleader = " "
 -- {{{ Neovim options are listed alphabetically.
 
 vim.opt.clipboard = "unnamedplus"
+vim.opt.colorcolumn = "+1"
+vim.opt.fillchars = { foldclose = " ", fold = " ", eob = " " }
 vim.opt.foldlevel = 0
 vim.opt.foldmethod = "marker"
+vim.opt.inccommand = "split"
+vim.opt.listchars = { eol = "↲", tab = "▸ ", trail = "·" }
 vim.opt.number = true
+vim.opt.numberwidth = 3
 vim.opt.relativenumber = true;
+vim.opt.showbreak = "↪"
 vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes:3"
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.softtabstop = 2
 vim.opt.swapfile = false
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
+vim.opt.undofile = true
 vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 
@@ -140,6 +151,9 @@ end
 
 vim.lsp.enable(enabled_servers)
 
+-- Diagnostics
+vim.diagnostic.config({ virtual_lines = { current_line = true } })
+
 -- ------------------------------------------------------------------------- }}}
 -- {{{ Treesitter
 
@@ -176,13 +190,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- LSP Attach.
 vim.api.nvim_create_autocmd('LspAttach', {
-	callback = function(ev)
-		local client = vim.lsp.get_client_by_id(ev.data.client_id)
-		if client:supports_method('textDocument/completion') then
-			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
+      vim.opt.completeopt = { 'menu', 'menuone', 'noinsert', 'fuzzy', 'popup' }
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+      vim.keymap.set('i', '<C-Space>', function() vim.lsp.completion.get() end)
       vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { buffer = ev.buf })
-		end
-	end,
+    end
+  end,
 })
 
 -- Automagically close command-line window.  I don't use it.
