@@ -2,8 +2,7 @@
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "typst",
   callback = function()
-    vim.pack.load("typst-preview.nvim")
-    require("typst-preview").setup()
+    require("traap.plugins.typst-preview").setup()
   end,
 })
 

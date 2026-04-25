@@ -22,25 +22,25 @@ snacks.setup({
               ["<c-h>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
+                  vim.cmd("TmuxNavigateLeft")
                 end,
               },
               ["<c-j>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateDown()
+                  vim.cmd("TmuxNavigateDown")
                 end,
               },
               ["<c-k>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateUp()
+                  vim.cmd("TmuxNavigateUp")
                 end,
               },
               ["<c-l>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateRight()
+                  vim.cmd("TmuxNavigateRight")
                 end,
               },
             },
@@ -50,25 +50,25 @@ snacks.setup({
               ["<c-h>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
+                  vim.cmd("TmuxNavigateLeft")
                 end,
               },
               ["<c-j>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateDown()
+                  vim.cmd("TmuxNavigateDown")
                 end,
               },
               ["<c-k>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateUp()
+                  vim.cmd("TmuxNavigateUp")
                 end,
               },
               ["<c-l>"] = {
                 mode = { "i", "n" },
                 function()
-                  require("nvim-tmux-navigation").NvimTmuxNavigateRight()
+                  vim.cmd("TmuxNavigateRight")
                 end,
               },
             },
@@ -135,4 +135,3 @@ vim.api.nvim_create_autocmd("User", {
     snacks.toggle.dim():map("<leader>uD")
   end,
 })
-
