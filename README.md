@@ -7,6 +7,7 @@ https://gpanders.com/blog/whats-new-in-neovim-0-11/
 
 TODO  I'd like each lsp/server-name.lua file to follow a patter similar to the
 one below.
+
 ```lua
 return {
   local servers = require("traap.config.lsp_servers")
@@ -16,4 +17,4 @@ return {
   filetypes = server.filetypes
 }
 ```
-Traap - 2025-07-28
+Traap - 2026-04-26
