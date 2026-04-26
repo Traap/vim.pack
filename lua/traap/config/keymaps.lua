@@ -3,6 +3,7 @@
 local platform = require("traap.core.platform")
 local keymap = require("traap.core.keymap").keymap
 local Snacks = require("snacks")
+local toggler = require("nvim-toggler")
 
 -- ------------------------------------------------------------------------- }}}
 -- {{{ Disable LazyVim keybindsings
@@ -157,9 +158,10 @@ keymap('n', 'gk',
 
 keymap("n", "<leader>gP", "<cmd>G pull<cr>", { desc = "Git Pull" })
 keymap("n", "<leader>gd", "<cmd>G diff<cr>", { desc = "Git Difference" })
-keymap("n", "<leader>gl", "<cmd>G log<cr>", { desc = "Git Log" })
+keymap("n", "<leader>gl", "<cmd>G log<cr>",  { desc = "Git Log" })
 keymap("n", "<leader>gh", "<cmd>vert bo help fugitive<cr>", { desc = "Vertical Help" })
 keymap("n", "<leader>gp", "<cmd>G push<cr>", { desc = "Git Push" })
+keymap("n", "<leader>gs", "<cmd>G<cr>",      { desc = "Git Status" })
 keymap("n", "gh", "<cmd>diffget //2<cr>", { desc = "Gitdiff choose left side" })
 keymap("n", "gl", "<cmd>diffget //3<cr>", { desc = "Gitdiff choose right size" })
 
@@ -177,6 +179,13 @@ keymap("n", "<leader>sl", "<cmd>vsplit<cr>", { desc = "Split vertical" })
 keymap("n", "<leader>ss", "0v)k$:sort<cr>", { desc = "Sort acronym list" })
 keymap("n", "<leader>sr", "<cmd>GrugFar<cr>", { desc = "Scan and Replace" })
 
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ t - Toggler
+
+keymap({'n', 'v'}, '<leader>tn', toggler.toggle,
+  { noremap = true, silent = true, desc = "Toggle operand"}
+)
 
 -- ------------------------------------------------------------------------- }}}
 -- {{{ w - Whitespace
@@ -247,6 +256,10 @@ end
 
 -- ------------------------------------------------------------------------- }}}
 -- {{{ Snacks
+
+keymap("n", "<leader>e", function()
+  Snacks.explorer()
+end, { desc = "File Explorer" })
 
 keymap("n", "<leader>fb", Snacks.picker.buffers, { desc = "Buffers" })
 
