@@ -1,7 +1,7 @@
 -- config/snacks/init.lua
 local plugin = require("traap.core.plugin")
 
-plugin.setup("snacks.nvim", "snacks", {
+local snacks = plugin.setup("snacks.nvim", "snacks", {
   bigfile = { enabled = true },
   dashboard = { enabled = false },
   explorer = { enabled = true },
@@ -33,7 +33,6 @@ plugin.setup("snacks.nvim", "snacks", {
               ["<c-j>"] = { "tmux_down",  mode = { "i", "n" } },
               ["<c-k>"] = { "tmux_up",    mode = { "i", "n" } },
               ["<c-l>"] = { "tmux_right", mode = { "i", "n" } },
-              },
             },
           },
           list = {
@@ -81,6 +80,10 @@ plugin.setup("snacks.nvim", "snacks", {
   },
   words = { enabled = true },
 })
+
+if not snacks then
+  return
+end
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
