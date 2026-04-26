@@ -1,1 +1,1 @@
-require("nvim-web-devicons").setup()
+require("traap.core.plugin").setup()

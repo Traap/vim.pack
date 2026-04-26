@@ -1,1 +1,1 @@
-require("traap.plugins.util").load("vim-fugitive")
+require("traap.core.plugin").load("vim-fugitive")

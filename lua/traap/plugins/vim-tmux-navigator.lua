@@ -1,1 +1,1 @@
-require("traap.plugins.util").load("vim-tmux-navigator")
+require("traap.core.plugin").load("vim-tmux-navigator")

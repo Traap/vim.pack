@@ -1,1 +1,1 @@
-require("traap.plugins.util").load("nui.nvim")
+require("traap.core.plugin").load("nui.nvim")

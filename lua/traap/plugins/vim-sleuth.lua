@@ -1,1 +1,1 @@
-require("traap.plugins.util").load("vim-sleuth")
+require("traap.core.plugin").load("vim-sleuth")

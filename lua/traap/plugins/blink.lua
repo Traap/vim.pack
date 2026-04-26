@@ -1,12 +1,30 @@
-local plugin = require("traap.plugins.util")
+local plugin = require("traap.core.plugin")
 
-local blink_path = vim.fs.joinpath(vim.fn.stdpath("data"), "site", "pack", "core", "opt", "blink.cmp")
-if vim.fn.isdirectory(blink_path) == 0 then
+local data_path = vim.fn.stdpath("data")
+local blink_paths = {
+  vim.fs.joinpath(data_path, "site", "pack", "core", "opt", "blink.cmp"),
+  vim.fs.joinpath(data_path, "lazy", "blink.cmp"),
+}
+
+local blink_path
+for _, path in ipairs(blink_paths) do
+  if vim.fn.isdirectory(path) == 1 then
+    blink_path = path
+    break
+  end
+end
+
+if not blink_path then
   return
 end
 
-if not vim.o.runtimepath:find(vim.pesc(blink_path), 1, true) then
-  vim.opt.runtimepath:append(blink_path)
+local lua_path = table.concat({
+  vim.fs.joinpath(blink_path, "lua", "?.lua"),
+  vim.fs.joinpath(blink_path, "lua", "?", "init.lua"),
+}, ";")
+
+if not package.path:find(vim.pesc(lua_path), 1, true) then
+  package.path = lua_path .. ";" .. package.path
 end
 
 local blink = plugin.require("blink.cmp")

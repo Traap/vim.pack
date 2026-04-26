@@ -1,11 +1,15 @@
 -- config/snacks/init.lua
-local snacks = require("snacks")
-snacks.setup({
+local plugin = require("traap.core.plugin")
+
+plugin.setup("snacks.nvim", "snacks", {
   bigfile = { enabled = true },
   dashboard = { enabled = false },
   explorer = { enabled = true },
+  git = { enabled = true },
+  gitbrowse = { enabled = true },
   indent = { enabled = false },
   input = { enabled = true },
+  image = { enabled = (vim.uv.os_uname().sysname ~= "Windows_NT") },
   notifier = {
     enabled = true,
     timeout = 3000,
@@ -14,63 +18,30 @@ snacks.setup({
   },
   picker = {
     enabled = true,
+    actions = {
+      tmux_left  = function(_) vim.cmd("TmuxNavigateLeft") end,
+      tmux_down  = function(_) vim.cmd("TmuxNavigateDown") end,
+      tmux_up    = function(_) vim.cmd("TmuxNavigateUp") end,
+      tmux_right = function(_) vim.cmd("TmuxNavigateRight") end,
+    },
     sources = {
       explorer = {
         win = {
           input = {
             keys = {
-              ["<c-h>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateLeft")
-                end,
-              },
-              ["<c-j>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateDown")
-                end,
-              },
-              ["<c-k>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateUp")
-                end,
-              },
-              ["<c-l>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateRight")
-                end,
+              ["<c-h>"] = { "tmux_left",  mode = { "i", "n" } },
+              ["<c-j>"] = { "tmux_down",  mode = { "i", "n" } },
+              ["<c-k>"] = { "tmux_up",    mode = { "i", "n" } },
+              ["<c-l>"] = { "tmux_right", mode = { "i", "n" } },
               },
             },
           },
           list = {
             keys = {
-              ["<c-h>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateLeft")
-                end,
-              },
-              ["<c-j>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateDown")
-                end,
-              },
-              ["<c-k>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateUp")
-                end,
-              },
-              ["<c-l>"] = {
-                mode = { "i", "n" },
-                function()
-                  vim.cmd("TmuxNavigateRight")
-                end,
-              },
+              ["<c-h>"] = { "tmux_left",  mode = { "i", "n" } },
+              ["<c-j>"] = { "tmux_down",  mode = { "i", "n" } },
+              ["<c-k>"] = { "tmux_up",    mode = { "i", "n" } },
+              ["<c-l>"] = { "tmux_right", mode = { "i", "n" } },
             },
           },
         },

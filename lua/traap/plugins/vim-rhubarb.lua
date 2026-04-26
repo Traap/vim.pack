@@ -1,1 +1,1 @@
-require("traap.plugins.util").load("vim-rhubarb")
+require("traap.core.plugin").load("vim-rhubarb")

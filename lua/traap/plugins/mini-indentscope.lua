@@ -1,15 +1,9 @@
-local plugin = require("traap.plugins.util")
+local plugin = require("traap.core.plugin")
 
-plugin.load("mini.indentscope")
-
-local mini_indentscope = plugin.require("mini.indentscope")
-
-if mini_indentscope then
-  mini_indentscope.setup({
-    draw = {
-      animation = mini_indentscope.gen_animation.none(),
-      delay = 0,
-    },
-    symbol = "│",
-  })
-end
+plugin.setup("mini.indentscope", "mini.indentscope", {
+  draw = {
+    animation = require('mini.indentscope').gen_animation.none(),
+    delay = 0,
+  },
+  symbol = "│",
+})

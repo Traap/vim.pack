@@ -1,1 +1,1 @@
-require("traap.plugins.util").load("plenary.nvim")
+require("traap.core.plugin").load("plenary.nvim")

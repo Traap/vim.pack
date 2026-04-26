@@ -1,9 +1,3 @@
-local M = {}
+local plugin = require("traap.core.plugin")
 
-function M.setup()
-  local plugin = require("traap.plugins.util")
-
-  plugin.setup("typst-preview.nvim", "typst-preview", {})
-end
-
-return M
+ plugin.setup("typst-preview.nvim", "typst-preview", {})
