@@ -18,32 +18,8 @@ local snacks = plugin.setup("snacks.nvim", "snacks", {
   },
   picker = {
     enabled = true,
-    actions = {
-      tmux_left  = function(_) vim.cmd("TmuxNavigateLeft") end,
-      tmux_down  = function(_) vim.cmd("TmuxNavigateDown") end,
-      tmux_up    = function(_) vim.cmd("TmuxNavigateUp") end,
-      tmux_right = function(_) vim.cmd("TmuxNavigateRight") end,
-    },
     sources = {
       explorer = {
-        win = {
-          input = {
-            keys = {
-              ["<c-h>"] = { "tmux_left",  mode = { "i", "n" } },
-              ["<c-j>"] = { "tmux_down",  mode = { "i", "n" } },
-              ["<c-k>"] = { "tmux_up",    mode = { "i", "n" } },
-              ["<c-l>"] = { "tmux_right", mode = { "i", "n" } },
-            },
-          },
-          list = {
-            keys = {
-              ["<c-h>"] = { "tmux_left",  mode = { "i", "n" } },
-              ["<c-j>"] = { "tmux_down",  mode = { "i", "n" } },
-              ["<c-k>"] = { "tmux_up",    mode = { "i", "n" } },
-              ["<c-l>"] = { "tmux_right", mode = { "i", "n" } },
-            },
-          },
-        },
         layout = {
           layout = {
             position = "right",

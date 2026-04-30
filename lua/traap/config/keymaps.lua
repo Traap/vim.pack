@@ -1,9 +1,10 @@
 -- {{{ local keymap function
 
 local platform = require("traap.core.platform")
+local plugin = require("traap.core.plugin")
 local keymap = require("traap.core.keymap").keymap
-local Snacks = require("snacks")
-local toggler = require("nvim-toggler")
+local Snacks = plugin.require("snacks")
+local toggler = plugin.require("nvim-toggler")
 
 -- ------------------------------------------------------------------------- }}}
 -- {{{ Disable LazyVim keybindsings
@@ -183,9 +184,11 @@ keymap("n", "<leader>sr", "<cmd>GrugFar<cr>", { desc = "Scan and Replace" })
 -- ------------------------------------------------------------------------- }}}
 -- {{{ t - Toggler
 
-keymap({'n', 'v'}, '<leader>tn', toggler.toggle,
-  { noremap = true, silent = true, desc = "Toggle operand"}
-)
+if toggler then
+  keymap({'n', 'v'}, '<leader>tn', toggler.toggle,
+    { noremap = true, silent = true, desc = "Toggle operand"}
+  )
+end
 
 -- ------------------------------------------------------------------------- }}}
 -- {{{ w - Whitespace
@@ -257,66 +260,104 @@ end
 -- ------------------------------------------------------------------------- }}}
 -- {{{ Snacks
 
-keymap("n", "<leader>e", function()
-  Snacks.explorer()
-end, { desc = "File Explorer" })
+if Snacks then
+  keymap("n", "<leader>e", function()
+    Snacks.explorer()
+  end, { desc = "File Explorer" })
 
-keymap("n", "<leader>fb", Snacks.picker.buffers, { desc = "Buffers" })
+  keymap("n", "<leader>fb", Snacks.picker.buffers, { desc = "Buffers" })
 
-keymap("n", "<leader>fc", function()
-  Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
-end, { desc = "Find Config File" })
+  keymap("n", "<leader>fc", function()
+    Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+  end, { desc = "Find Config File" })
 
-keymap("n", "<leader>ff", Snacks.picker.files, { desc = "Find Files" })
-keymap("n", "<leader>fg", Snacks.picker.git_files, { desc = "Find Git Files" })
-keymap("n", "<leader>fp", Snacks.picker.projects, { desc = "Projects" })
-keymap("n", "<leader>fr", Snacks.picker.recent, { desc = "Recent" })
+  keymap("n", "<leader>ff", Snacks.picker.files, { desc = "Find Files" })
+  keymap("n", "<leader>fg", Snacks.picker.git_files, { desc = "Find Git Files" })
+  keymap("n", "<leader>fp", Snacks.picker.projects, { desc = "Projects" })
+  keymap("n", "<leader>fr", Snacks.picker.recent, { desc = "Recent" })
 
--- Git
-keymap("n", "<leader>gB", function()
-  Snacks.gitbrowse()
-end, { desc = "Git Browse" })
+  -- Git
+  keymap("n", "<leader>gB", function()
+    Snacks.gitbrowse()
+  end, { desc = "Git Browse" })
 
-keymap("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
-keymap("n", "<leader>gS", Snacks.picker.git_stash, { desc = "Git Stash" })
-keymap("n", "<leader>gb", Snacks.picker.git_branches, { desc = "Git Branches" })
-keymap("n", "<leader>gd", Snacks.picker.git_diff, { desc = "Git Diff (Hunks)" })
-keymap("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
-keymap("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
+  keymap("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
+  keymap("n", "<leader>gS", Snacks.picker.git_stash, { desc = "Git Stash" })
+  keymap("n", "<leader>gb", Snacks.picker.git_branches, { desc = "Git Branches" })
+  keymap("n", "<leader>gd", Snacks.picker.git_diff, { desc = "Git Diff (Hunks)" })
+  keymap("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
+  keymap("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
 
--- Grep
-keymap("n", "<leader>sb", Snacks.picker.lines, { desc = "Buffer Lines" })
-keymap("n", "<leader>sB", Snacks.picker.grep_buffers, { desc = "Grep Open Buffers" })
-keymap("n", "<leader>sg", Snacks.picker.grep, { desc = "Grep" })
-keymap({ "n", "x" }, "<leader>sw", Snacks.picker.grep_word, { desc = "Visual Word or Selection" })
+  -- Grep
+  keymap("n", "<leader>sb", Snacks.picker.lines, { desc = "Buffer Lines" })
+  keymap("n", "<leader>sB", Snacks.picker.grep_buffers, { desc = "Grep Open Buffers" })
+  keymap("n", "<leader>sg", Snacks.picker.grep, { desc = "Grep" })
+  keymap({ "n", "x" }, "<leader>sw", Snacks.picker.grep_word, { desc = "Visual Word or Selection" })
 
--- Search
-keymap("n", "<leader>sC", Snacks.picker.commands, { desc = "Commands" })
-keymap("n", "<leader>sD", Snacks.picker.diagnostics_buffer, { desc = "Buffer Diagnostics" })
-keymap("n", "<leader>sH", Snacks.picker.highlights, { desc = "Highlights" })
-keymap("n", "<leader>sM", Snacks.picker.man, { desc = "Man Pages" })
-keymap("n", "<leader>sR", Snacks.picker.resume, { desc = "Resume" })
-keymap("n", "<leader>sa", Snacks.picker.autocmds, { desc = "Autocmds" })
-keymap("n", "<leader>sd", Snacks.picker.diagnostics, { desc = "Diagnostics" })
-keymap("n", "<leader>sh", Snacks.picker.help, { desc = "Help Pages" })
-keymap("n", "<leader>si", Snacks.picker.icons, { desc = "Icons" })
-keymap("n", "<leader>sj", Snacks.picker.jumps, { desc = "Jumps" })
-keymap("n", "<leader>sk", Snacks.picker.keymaps, { desc = "Keymaps" })
-keymap("n", "<leader>sl", Snacks.picker.loclist, { desc = "Location List" })
-keymap("n", "<leader>sm", Snacks.picker.marks, { desc = "Marks" })
-keymap("n", "<leader>sp", Snacks.picker.lazy, { desc = "Plugin Specs" })
-keymap("n", "<leader>sq", Snacks.picker.qflist, { desc = "Quickfix List" })
-keymap("n", "<leader>su", Snacks.picker.undo, { desc = "Undo History" })
-keymap("n", "<leader>s/", Snacks.picker.search_history, { desc = "Search History" })
-keymap("n", "<leader>sr", Snacks.picker.registers, { desc = "Registers" })
-keymap("n", "<leader>uC", Snacks.picker.colorschemes, { desc = "Colorschemes" })
+  -- Search
+  keymap("n", "<leader>sC", Snacks.picker.commands, { desc = "Commands" })
+  keymap("n", "<leader>sD", Snacks.picker.diagnostics_buffer, { desc = "Buffer Diagnostics" })
+  keymap("n", "<leader>sH", Snacks.picker.highlights, { desc = "Highlights" })
+  keymap("n", "<leader>sM", Snacks.picker.man, { desc = "Man Pages" })
+  keymap("n", "<leader>sR", Snacks.picker.resume, { desc = "Resume" })
+  keymap("n", "<leader>sa", Snacks.picker.autocmds, { desc = "Autocmds" })
+  keymap("n", "<leader>sd", Snacks.picker.diagnostics, { desc = "Diagnostics" })
+  keymap("n", "<leader>sh", Snacks.picker.help, { desc = "Help Pages" })
+  keymap("n", "<leader>si", Snacks.picker.icons, { desc = "Icons" })
+  keymap("n", "<leader>sj", Snacks.picker.jumps, { desc = "Jumps" })
+  keymap("n", "<leader>sk", Snacks.picker.keymaps, { desc = "Keymaps" })
+  keymap("n", "<leader>sl", Snacks.picker.loclist, { desc = "Location List" })
+  keymap("n", "<leader>sm", Snacks.picker.marks, { desc = "Marks" })
+  keymap("n", "<leader>sp", Snacks.picker.lazy, { desc = "Plugin Specs" })
+  keymap("n", "<leader>sq", Snacks.picker.qflist, { desc = "Quickfix List" })
+  keymap("n", "<leader>su", Snacks.picker.undo, { desc = "Undo History" })
+  keymap("n", "<leader>s/", Snacks.picker.search_history, { desc = "Search History" })
+  keymap("n", "<leader>sr", Snacks.picker.registers, { desc = "Registers" })
+  keymap("n", "<leader>uC", Snacks.picker.colorschemes, { desc = "Colorschemes" })
 
--- Utilities
-keymap("n", "<leader>.", Snacks.scratch.open, { desc = "Toggle Scratch Buffer" })
-keymap("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
--- keymap("n", "<leader>bd", snacks.bufdelete, { desc = "Delete Buffer" })
-keymap("n", "<leader>cR", Snacks.rename.rename_file, { desc = "Rename File" })
-keymap("n", "<leader>un", Snacks.notifier.hide, { desc = "Dismiss All Notifications" })
-keymap({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
-keymap({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
+  -- Utilities
+  keymap("n", "<leader>.", Snacks.scratch.open, { desc = "Toggle Scratch Buffer" })
+  keymap("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
+  -- keymap("n", "<leader>bd", snacks.bufdelete, { desc = "Delete Buffer" })
+  keymap("n", "<leader>cR", Snacks.rename.rename_file, { desc = "Rename File" })
+  keymap("n", "<leader>un", Snacks.notifier.hide, { desc = "Dismiss All Notifications" })
+  keymap({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
+  keymap({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
+
+  -- ----------------------------------------------------------------------- }}}
+  -- {{{ Snacks - Fold
+
+  local function tmux_left()
+    vim.cmd("TmuxNavigateLeft")
+  end
+
+  local function tmux_down()
+    vim.cmd("TmuxNavigateDown")
+  end
+
+  local function tmux_up()
+    vim.cmd("TmuxNavigateUp")
+  end
+
+  local function tmux_right()
+    vim.cmd("TmuxNavigateRight")
+  end
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "snacks_picker_input", "snacks_picker_list" },
+    callback = function(event)
+      local opts = { buffer = event.buf, desc = "Tmux Navigate Left" }
+      vim.keymap.set({ "i", "n" }, "<c-h>", tmux_left, opts)
+
+      opts = { buffer = event.buf, desc = "Tmux Navigate Down" }
+      vim.keymap.set({ "i", "n" }, "<c-j>", tmux_down, opts)
+
+      opts = { buffer = event.buf, desc = "Tmux Navigate Up" }
+      vim.keymap.set({ "i", "n" }, "<c-k>", tmux_up, opts)
+
+      opts = { buffer = event.buf, desc = "Tmux Navigate Right" }
+      vim.keymap.set({ "i", "n" }, "<c-l>", tmux_right, opts)
+    end,
+  })
+end
 -- ------------------------------------------------------------------------- }}}
