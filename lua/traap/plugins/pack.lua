@@ -12,6 +12,7 @@ vim.pack.add({
   { src = "https://github.com/echasnovski/mini.surround",        lazy = true },
   { src = "https://github.com/folke/snacks.nvim",                lazy = false },
   { src = "https://github.com/folke/tokyonight.nvim",            lazy = true },
+  { src = "https://github.com/folke/which-key.nvim",             lazy = true },
   { src = "https://github.com/echasnovski/mini.comment",         lazy = true },
   { src = "https://github.com/lewis6991/gitsigns.nvim",          lazy = true },
   { src = "https://github.com/nvim-lua/plenary.nvim",            lazy = true },
