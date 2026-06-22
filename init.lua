@@ -8,6 +8,7 @@ vim.g.maplocalleader = " "
 
 -- Load configuration.
 require("traap.config.options")
+require("traap.core.pack")
 require("traap.plugins")
 require("traap.lsp")
 require("traap.config.autocmds")

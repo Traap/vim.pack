@@ -323,41 +323,42 @@ if Snacks then
   keymap("n", "<leader>un", Snacks.notifier.hide, { desc = "Dismiss All Notifications" })
   keymap({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
   keymap({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
-
-  -- ----------------------------------------------------------------------- }}}
-  -- {{{ Snacks - Fold
-
-  local function tmux_left()
-    vim.cmd("TmuxNavigateLeft")
-  end
-
-  local function tmux_down()
-    vim.cmd("TmuxNavigateDown")
-  end
-
-  local function tmux_up()
-    vim.cmd("TmuxNavigateUp")
-  end
-
-  local function tmux_right()
-    vim.cmd("TmuxNavigateRight")
-  end
-
-  vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "snacks_picker_input", "snacks_picker_list" },
-    callback = function(event)
-      local opts = { buffer = event.buf, desc = "Tmux Navigate Left" }
-      vim.keymap.set({ "i", "n" }, "<c-h>", tmux_left, opts)
-
-      opts = { buffer = event.buf, desc = "Tmux Navigate Down" }
-      vim.keymap.set({ "i", "n" }, "<c-j>", tmux_down, opts)
-
-      opts = { buffer = event.buf, desc = "Tmux Navigate Up" }
-      vim.keymap.set({ "i", "n" }, "<c-k>", tmux_up, opts)
-
-      opts = { buffer = event.buf, desc = "Tmux Navigate Right" }
-      vim.keymap.set({ "i", "n" }, "<c-l>", tmux_right, opts)
-    end,
-  })
 end
+
+-- ----------------------------------------------------------------------- }}}
+-- {{{ Tmux navigator
+
+local function tmux_left()
+  vim.cmd("TmuxNavigateLeft")
+end
+
+local function tmux_down()
+  vim.cmd("TmuxNavigateDown")
+end
+
+local function tmux_up()
+  vim.cmd("TmuxNavigateUp")
+end
+
+local function tmux_right()
+  vim.cmd("TmuxNavigateRight")
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+pattern = { "snacks_picker_input", "snacks_picker_list" },
+callback = function(event)
+  local opts = { buffer = event.buf, desc = "Tmux Navigate Left" }
+  vim.keymap.set({ "i", "n" }, "<c-h>", tmux_left, opts)
+
+  opts = { buffer = event.buf, desc = "Tmux Navigate Down" }
+  vim.keymap.set({ "i", "n" }, "<c-j>", tmux_down, opts)
+
+  opts = { buffer = event.buf, desc = "Tmux Navigate Up" }
+  vim.keymap.set({ "i", "n" }, "<c-k>", tmux_up, opts)
+
+  opts = { buffer = event.buf, desc = "Tmux Navigate Right" }
+  vim.keymap.set({ "i", "n" }, "<c-l>", tmux_right, opts)
+end,
+})
+
 -- ------------------------------------------------------------------------- }}}

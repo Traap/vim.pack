@@ -1,5 +1,3 @@
-require("traap.plugins.pack")
-
 require("traap.plugins.blink")
 require("traap.plugins.colorizer")
 require("traap.plugins.gitsigns")
