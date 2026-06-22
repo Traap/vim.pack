@@ -18,3 +18,4 @@ return {
 }
 ```
 Traap - 2026-04-26
+XDG_CONFIG_HOME=/home/traap/git NVIM_APPNAME=vim.pack
