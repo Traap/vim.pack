@@ -6,6 +6,10 @@ local snacks = plugin.setup("snacks.nvim", "snacks", {
   dashboard    = {
     enabled = true,
     preset = { header = [[Configured by Traap and powered by vim.pack.]] },
+    sections = {
+      { section = "header" },
+      { section = "keys", gap = 1, padding = 1 },
+    },
   },
   dim          = { enabled = false },
   gh           = { enabled = false },
