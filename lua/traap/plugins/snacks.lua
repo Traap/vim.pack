@@ -1,6 +1,20 @@
 -- config/snacks/init.lua
 local plugin = require("traap.core.plugin")
 
+local function startup_stats()
+  local plugins = vim.pack.get(nil, { info = false })
+  local active = vim.tbl_count(vim.tbl_filter(function(entry)
+    return entry.active
+  end, plugins))
+  local elapsed_ms = (vim.uv.hrtime() - vim.g.traap_start_time) / 1e6
+
+  return {
+    align = "center",
+    text = ("⚡ Neovim loaded %d/%d plugins in %.2f ms")
+        :format(active, #plugins, elapsed_ms),
+  }
+end
+
 local snacks = plugin.setup("snacks.nvim", "snacks", {
   bigfile      = { enabled = true },
   dashboard    = {
@@ -9,6 +23,7 @@ local snacks = plugin.setup("snacks.nvim", "snacks", {
     sections = {
       { section = "header" },
       { section = "keys", gap = 1, padding = 1 },
+      startup_stats,
     },
   },
   dim          = { enabled = false },
