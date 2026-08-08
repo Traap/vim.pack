@@ -1,3 +1,25 @@
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(event)
+    local data = event.data
+    if
+        data.spec.name == "markdown-preview.nvim"
+        and (data.kind == "install" or data.kind == "update")
+    then
+      local result = vim.system({ "yarn", "install" }, {
+        cwd = vim.fs.joinpath(data.path, "app"),
+        text = true,
+      }):wait()
+
+      if result.code ~= 0 then
+        vim.notify(
+          "markdown-preview.nvim build failed:\n" .. (result.stderr or ""),
+          vim.log.levels.ERROR
+        )
+      end
+    end
+  end,
+})
+
 vim.pack.add({
   { src = "https://github.com/MagicDuck/grug-far.nvim",          lazy = false },
   { src = "https://github.com/MunifTanjim/nui.nvim",             lazy = true },
