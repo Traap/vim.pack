@@ -9,7 +9,8 @@ plugin manager.
 - A recent Neovim build with `vim.pack`, `vim.lsp.config()`, and
   `vim.lsp.enable()`
 - Git, for installing packages
-- The language-server executables you want to use (see [LSP](#lsp))
+- `mise` and Solargraph for Ruby LSP support, plus `nixd` for Nix; Mason
+  installs the other language servers on demand
 - A Nerd Font for the configured icons
 - Optional command-line tools such as `rg` and `fd` for the best Snacks picker
   experience
@@ -108,32 +109,44 @@ Useful mappings include:
 
 ## LSP
 
-`lua/traap/config/lsp_servers.lua` enables the following server names through
-Neovim's native LSP API:
+`lua/traap/lsp/servers.lua` maps filetypes to 26 language servers. When a
+configured filetype is opened for the first time, Mason installs its server if
+needed; the configuration then enables the server through Neovim's native LSP
+API and attaches it to matching buffers. Solargraph and `nixd` are managed
+externally; Solargraph runs through `mise`.
 
 | Language or domain | Server name |
 | --- | --- |
 | Shell | `bashls` |
-| BitBake | `bitbake-language-server` |
 | C/C++ | `clangd` |
-| C# | `csharp-ls` |
+| C# | `csharp_ls` |
 | CSS | `cssls` |
-| Emmet | `emmetls` |
 | Go | `gopls` |
+| HTML | `html` |
+| Java | `jdtls` |
 | JSON | `jsonls` |
+| Julia | `julials` |
+| LaTeX prose | `ltex` |
 | Lua | `lua_ls` |
+| Markdown | `marksman` |
+| Nix | `nixd` |
 | Python | `pyright` |
+| QML | `qmlls` |
 | Ruby | `solargraph` |
 | Rust | `rust_analyzer` |
-| SQL | `sqlls` |
+| SQL | `sqls` |
+| Svelte | `svelte` |
 | TeX | `texlab` |
-| Typst | `tinymist` |
-| TypeScript | `tsserver` |
+| TOML | `taplo` |
+| TypeScript/JavaScript | `ts_ls` |
+| Vimscript | `vimls` |
+| XML | `lemminx` |
 | YAML | `yamlls` |
+| Zig | `zls` |
 
-Install the corresponding executables separately and ensure they are available
-on `PATH`. Blink capabilities are added to every server when Blink is available,
-and diagnostics use virtual lines for the current line.
+Blink capabilities are added to every server. Servers that support formatting
+format synchronously before a buffer is written, and diagnostics use signs plus
+virtual lines on the current line.
 
 Custom native server definitions in `lsp/` return the command, root markers,
 filetypes, and optional settings. Definitions whose filenames match an enabled
@@ -147,5 +160,6 @@ return {
 }
 ```
 
-After installing a server, use `:checkhealth vim.lsp` and `:LspInfo` to inspect
-its configuration and attachment status.
+Use `:Mason` to inspect installed server packages. `:LspInfo`, `:LspLog`,
+`:LspStart`, `:LspRestart[!]`, and `:LspStop[!]` inspect and control native LSP
+clients.

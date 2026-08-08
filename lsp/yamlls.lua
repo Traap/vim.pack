@@ -1,5 +1,5 @@
 return {
-  cmd = { "yaml-lanaguage-server", "--stdio" },
+  cmd = { "yaml-language-server", "--stdio" },
   root_markers = {
      ".git"
   },
@@ -7,4 +7,3 @@ return {
     "yaml", "yaml.docker-compose", "yaml.gitlab", "yaml.helm-values"
   }
 }
-

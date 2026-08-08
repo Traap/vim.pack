@@ -37,6 +37,14 @@
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
+    "mason-lspconfig.nvim": {
+      "rev": "67029ccdac1ef8941e13b826417bc0ffac24cc86",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason.nvim": {
+      "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
     "mini.comment": {
       "rev": "8e5ff3ed3cc0e8f216617aae01020c00c20f7a87",
       "src": "https://github.com/echasnovski/mini.comment"
@@ -72,6 +80,10 @@
     "nvim-colorizer.lua": {
       "rev": "5cfe7fffbd01e17b3c1e14af85d5febdef88bd8c",
       "src": "https://github.com/NvChad/nvim-colorizer.lua"
+    },
+    "nvim-lspconfig": {
+      "rev": "43ed3797b266e1ee8d222e491379ad471c9d3146",
+      "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-toggler": {
       "rev": "467808600882fd6c9e33b9dbc4889b1b80cfd917",
