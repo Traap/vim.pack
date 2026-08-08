@@ -1,7 +1,7 @@
 local M = {}
 
 
-function M.load(kname)
+function M.load(name)
   return pcall(vim.cmd.packadd, name)
 end
 

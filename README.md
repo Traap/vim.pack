@@ -102,7 +102,7 @@ Useful mappings include:
 | `<leader>sg` | Grep the project |
 | `<leader>sr` | Open Grug Far search and replace |
 | `<leader>gs` | Open Fugitive status |
-| `<A-1>` … `<A-4>` | Select a Harpoon file |
+| `;1` … `;4` | Select a Harpoon file |
 | `<leader>ud` | Toggle diagnostics |
 | `<leader>i` | Toggle invisible characters |
 
