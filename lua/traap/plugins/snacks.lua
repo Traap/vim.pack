@@ -2,21 +2,26 @@
 local plugin = require("traap.core.plugin")
 
 local snacks = plugin.setup("snacks.nvim", "snacks", {
-  bigfile = { enabled = true },
-  dashboard = { enabled = false },
-  explorer = { enabled = true },
-  git = { enabled = true },
-  gitbrowse = { enabled = true },
-  indent = { enabled = false },
-  input = { enabled = true },
-  image = { enabled = (vim.uv.os_uname().sysname ~= "Windows_NT") },
-  notifier = {
+  bigfile      = { enabled = true },
+  dashboard    = {
+    enabled = true,
+    preset = { header = [[Configured by Traap and powered by vim.pack.]] },
+  },
+  dim          = { enabled = false },
+  gh           = { enabled = false },
+  explorer     = { enabled = true },
+  git          = { enabled = true },
+  gitbrowse    = { enabled = true },
+  image        = { enabled = (vim.uv.os_uname().sysname ~= "Windows_NT") },
+  indent       = { enabled = false },
+  input        = { enabled = true },
+  notifier     = {
     enabled = true,
     timeout = 3000,
     top_down = false,
     title_pos = "left",
   },
-  picker = {
+  picker       = {
     enabled = true,
     sources = {
       explorer = {
@@ -28,16 +33,19 @@ local snacks = plugin.setup("snacks.nvim", "snacks", {
       },
     },
   },
-  quickfile = { enabled = true },
-  scope = { enabled = true },
-  scroll = { enabled = false },
+  quickfile    = { enabled = true },
+  rename       = { enabled = true },
+  scope        = { enabled = true },
+  scratchfile  = { enabled = false },
+  scroll       = { enabled = false },
   statuscolumn = { enabled = true },
-  styles = {
+  styles       = {
     notification = {
       -- wo = { wrap = true }
     },
   },
-  toggle = {
+  terminal     = { enabled = false },
+  toggle       = {
     map = vim.keymap.set,
     which_key = true,
     notify = true,
@@ -54,7 +62,10 @@ local snacks = plugin.setup("snacks.nvim", "snacks", {
       disabled = "Enable ",
     },
   },
-  words = { enabled = true },
+  util         = { enabled = false },
+  win          = { enabled = false },
+  words        = { enabled = true },
+  zen          = { enabled = true },
 })
 
 if not snacks then

@@ -217,17 +217,17 @@ keymap("n", "<leader>|", "<cmd>%s/\t/|/g<CR>", { desc = "Replace \t with |" })
 -- ------------------------------------------------------------------------- }}}
 -- {{{ x - eXtra quality of life items.
 
-keymap("n", "<leader><leader>xf",
+keymap("n", ";f",
   [[<cmd>source %<cr><cmd>echo 'Sourced ' . @%<cr>]],
   { desc = "Source file" }
 )
 
-keymap("n", "<leader><leader>xl",
+keymap("n", ";l",
   [[<cmd>.lua<cr><cmd>echo 'Current line executed.' . <cr>]],
   { desc = "Source current line." }
 )
 
-keymap('v', '<leader><leader>xs',
+keymap('v', ';v',
   [[:lua<cr><cmd>echo 'Visual selection executed.'<cr>]],
   { desc = "" }
 )
@@ -239,22 +239,56 @@ keymap({ "n", "v", "x" }, "<leader>d", '"+d')
 keymap({ "n", "v", "x" }, "<leader>y", '"+y')
 
 -- ------------------------------------------------------------------------- }}}
--- {{{ vscode bridge
+-- {{{ Harpoon
 
-if platform.is_vscode() then
-  -- Navigate VSCode tabs like lazyvim buffers
-  keymap("n", "<S-h>", function()
-    vscode.call("workbench.action.previousEditor")
-  end)
+if platform.has_plugin("harpoon") then
+  keymap("n", "<a-1>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():select(1)
+    end)
+  end, { desc = "Harpoon buffer 1" })
 
-  keymap("n", "<S-l>", function()
-    vscode.call("workbench.action.nextEditor")
-  end)
+  keymap("n", "<a-2>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():select(2)
+    end)
+  end, { desc = "Harpoon buffer 2" })
 
-  -- Toggle VS Explorer sidebar
-  keymap("n", "<S-l>", function()
-    vscode.call("workbench.action.toggleSidebarVisibility")
-  end)
+  keymap("n", "<a-3>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():select(3)
+    end)
+  end, { desc = "Harpoon buffer 3" })
+
+  keymap("n", "<a-4>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():select(4)
+    end)
+  end, { desc = "Harpoon buffer 4" })
+
+  keymap("n", "<a-5>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():next()
+    end)
+  end, { desc = "Harpoon next buffer" })
+
+  keymap("n", "<a-6>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():prev()
+    end)
+  end, { desc = "Harpoon prev buffer" })
+
+  keymap("n", "<a-7>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end)
+  end, { desc = "Harpoon Toggle Menu" })
+
+  keymap("n", "<a-8>", function()
+    platform.with_plugin("harpoon", "harpoon", function(harpoon)
+      harpoon:list():add()
+    end)
+  end, { desc = "Harpoon Add file" })
 end
 
 -- ------------------------------------------------------------------------- }}}
@@ -281,7 +315,7 @@ if Snacks then
     Snacks.gitbrowse()
   end, { desc = "Git Browse" })
 
-  keymap("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
+  keymap("", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
   keymap("n", "<leader>gS", Snacks.picker.git_stash, { desc = "Git Stash" })
   keymap("n", "<leader>gb", Snacks.picker.git_branches, { desc = "Git Branches" })
   keymap("n", "<leader>gd", Snacks.picker.git_diff, { desc = "Git Diff (Hunks)" })
@@ -360,5 +394,334 @@ callback = function(event)
   vim.keymap.set({ "i", "n" }, "<c-l>", tmux_right, opts)
 end,
 })
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ grug-far
+
+if platform.has_plugin("grug-far.nvim") then
+  keymap("n", "<leader>sr", function()
+    platform.with_loaded_plugin("grug-far.nvim", function()
+      vim.cmd("GrugFar")
+    end)
+  end, { desc = "Scan and Replace" })
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ img-clip.nvim
+
+if platform.has_plugin("img-clip.nvim") then
+  keymap("n", "<leader>pi", function()
+    platform.with_loaded_plugin("img-clip.nvim", function()
+      vim.cmd("PasteImage")
+    end)
+  end, { desc = "Save and Paste Image" })
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ in-and-out.nvim
+
+if platform.has_plugin("in-and-out.nvim") then
+  keymap("i", "<c-l>", function()
+    platform.with_plugin("in-and-out.nvim", "in-and-out", function(in_and_out)
+      in_and_out.in_and_out()
+    end)
+  end)
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ nvim-toggler
+
+if platform.has_plugin("nvim-toggler") then
+  keymap({ "n", "v" }, "<leader>tn", function()
+    platform.with_plugin("nvim-toggler", "nvim-toggler", function(toggler)
+      toggler.toggle()
+    end)
+  end, { desc = "Toggle operand" })
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ markdown-preview.nvim
+
+if platform.has_plugin("markdown-preview.nvim") then
+  keymap("n", "<leader>mt", function()
+    platform.with_loaded_plugin("markdown-preview.nvim", function()
+      vim.cmd("MarkdownPreviewToggle")
+    end)
+  end, { desc = "Markdown Toggle Preview" })
+
+  keymap("n", "<leader>mp", function()
+    platform.with_loaded_plugin("markdown-preview.nvim", function()
+      vim.cmd("MarkdownPreview")
+    end)
+  end, { desc = "Markdown Preview" })
+
+  keymap("n", "<leader>ms", function()
+    platform.with_loaded_plugin("markdown-preview.nvim", function()
+      vim.cmd("MarkdownPreviewStop")
+    end)
+  end, { desc = "Markdown Stop Preview" })
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ todo-comments.nvim
+
+if platform.has_plugin("todo-comments.nvim") then
+  keymap("n", "<leader>fy", function()
+    platform.with_loaded_plugin("todo-comments.nvim", function()
+      vim.cmd("Find Todo keywords=YouTube,Youtube,URL,Url")
+    end)
+  end)
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ vim-dadbod-ui
+
+if platform.has_plugin("vim-dadbod-ui") then
+  keymap("n", "<leader>db", function()
+    platform.with_loaded_plugin("vim-dadbod-ui", function()
+      vim.cmd("DBUIToggle")
+    end)
+  end, { desc = "Toggle DBUI" })
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ vim-easy-align
+
+if platform.has_plugin("vim-easy-align") then
+  keymap(
+    "x",
+    "ga",
+    "<Plug>(EasyAlign)",
+    { desc = "EasyAlign", noremap = false }
+  )
+  keymap(
+    "n",
+    "ga",
+    "<Plug>(EasyAlign)",
+    { desc = "EasyAlign", noremap = false }
+  )
+
+  keymap("n", "<bar>", function()
+    pcall(vim.cmd, "NoiceDisable")
+    vim.opt.cmdheight = 1
+    vim.cmd("normal gaip*|")
+    vim.opt.cmdheight = 0
+    pcall(vim.cmd, "NoiceEnable")
+  end, { desc = "EasyAlign gaip*<bar>" })
+
+  keymap("n", "<leader>0", function()
+    pcall(vim.cmd, "NoiceDisable")
+    vim.opt.cmdheight = 1
+    vim.cmd("normal gaip*,")
+    vim.opt.cmdheight = 0
+    pcall(vim.cmd, "NoiceEnable")
+  end, { desc = "EasyAlign gaip=," })
+end
+-- ------------------------------------------------------------------------- }}}
+-- {{{ vimtex
+
+if platform.has_plugin("vimtex") then
+  keymap("n", "<leader>lC", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-clean-full)")
+    end)
+  end)
+
+  keymap("n", "<leader>lG", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-status-all)")
+    end)
+  end)
+
+  keymap("n", "<leader>lI", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-info-full)")
+    end)
+  end)
+
+  keymap("n", "<leader>lK", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-stop-all)")
+    end)
+  end)
+
+  keymap("n", "<leader>lL", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-compile-selected)")
+    end)
+  end)
+
+  keymap("n", "<leader>lT", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-toc-toggle)")
+    end)
+  end)
+
+  keymap("n", "<leader>lX", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-reload-state)")
+    end)
+  end)
+
+  keymap("n", "<leader>la", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-context-menu)")
+    end)
+  end)
+
+  keymap("n", "<leader>lc", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-clean)")
+    end)
+  end)
+
+  keymap("n", "<leader>le", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-errors)")
+    end)
+  end)
+
+  keymap("n", "<leader>lg", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-status)")
+    end)
+  end)
+
+  keymap("n", "<leader>li", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-info)")
+    end)
+  end)
+
+  keymap("n", "<leader>lk", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-stop)")
+    end)
+  end)
+
+  keymap("n", "<leader>ll", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-compile)")
+    end)
+  end)
+
+  keymap("n", "<leader>lm", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-imaps-list)")
+    end)
+  end)
+
+  keymap("n", "<leader>lo", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-compile-output)")
+    end)
+  end)
+
+  keymap("n", "<leader>lq", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-log)")
+    end)
+  end)
+
+  keymap("n", "<leader>ls", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-toggle-main)")
+    end)
+  end)
+
+  keymap("n", "<leader>lt", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-toc-open)")
+    end)
+  end)
+
+  keymap("n", "<leader>lv", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-view)")
+    end)
+  end)
+
+  keymap("n", "<leader>lx", function()
+    platform.with_loaded_plugin("vimtex", function()
+      platform.input("<Plug>(vimtex-reload)")
+    end)
+  end)
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ vscode bridge
+
+if platform.is_vscode() then
+  -- Navigate VSCode tabs like lazyvim buffers
+  keymap("n", "<S-h>", function()
+    vscode.call("workbench.action.previousEditor")
+  end)
+
+  keymap("n", "<S-l>", function()
+    vscode.call("workbench.action.nextEditor")
+  end)
+
+  -- Toggle VS Explorer sidebar
+  keymap("n", "<S-l>", function()
+    vscode.call("workbench.action.toggleSidebarVisibility")
+  end)
+end
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ wiki.vim
+
+if platform.has_plugin("wiki.vim") and platform.is_nvim() then
+  local wikihome = os.getenv("WIKIHOME")
+  local workhome = os.getenv("WORKHOME")
+  local ythome = os.getenv("YOUTUBEHOME")
+
+  if wikihome then
+    keymap("n", "<leader>pw", "<cmd>edit " .. wikihome .. "/index.md<cr>",
+      { desc = "Personal Wiki" })
+    keymap("n", "<leader>wb", "<cmd>edit " .. wikihome .. "/journal/Backlog.md<cr>",
+      { desc = "Wiki Backlog" })
+    keymap("n", "<leader>wa", "<cmd>edit " .. wikihome .. "/journal/Acronyms.md<cr>",
+      { desc = "Wiki Acronyms" })
+    keymap("n", "<leader>wi", "<cmd>edit " .. wikihome .. "/index.md<cr>",
+      { desc = "Personal Wiki" })
+  end
+
+  if workhome then
+    keymap("n", "<leader>wk", "<cmd>edit " .. workhome .. "/Wiki/index.md<cr>",
+      { desc = "Work Wiki" })
+  end
+
+  if ythome then
+    keymap("n", "<leader>yt", "<cmd>edit " .. ythome .. "/wiki/index.md<cr>",
+      { desc = "YouTube Wiki" })
+  end
+
+  keymap("n", "<leader>we", function()
+    platform.with_loaded_plugin("wiki.vim", function()
+      vim.cmd("WikiExport")
+    end)
+  end, { desc = "Wiki Export" })
+
+  if wikihome then
+    keymap("n", "<leader>wj", function()
+      platform.with_loaded_plugin("wiki.vim", function()
+        vim.cmd.cd(vim.fn.fnameescape(wikihome))
+        vim.cmd("WikiJournal")
+      end)
+    end, { desc = "Wiki Journal" })
+  end
+
+  keymap("n", "<leader>wp", function()
+    platform.with_loaded_plugin("wiki.vim", function()
+      vim.cmd("WikiPages")
+    end)
+  end, { desc = "Wiki Pages" })
+
+  keymap("n", "<leader>wv", function()
+    platform.with_loaded_plugin("wiki.vim", function()
+      vim.cmd("lua Page_Viewer()")
+    end)
+  end, { desc = "Wiki View Exported Page" })
+end
 
 -- ------------------------------------------------------------------------- }}}

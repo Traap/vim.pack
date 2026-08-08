@@ -71,34 +71,18 @@ function M.get_host()
   return vim.uv.os_gethostname()
 end
 
----Return whether a lazy.nvim plugin exists and is enabled.
----@param name string lazy.nvim plugin name
+---Return whether a vim.pack plugin is registered.
+---@param name string vim.pack plugin name
 ---@return boolean
 function M.has_plugin(name)
-  local ok, config = pcall(require, "lazy.core.config")
-  if not ok then
-    return false
-  end
-
-  local plugin = config.plugins[name]
-  return plugin ~= nil and plugin.enabled ~= false
+  return require("traap.core.plugin").has(name)
 end
 
----Load a lazy.nvim plugin by name when it is configured and enabled.
----@param name string lazy.nvim plugin name
+---Load a vim.pack plugin by name when it is registered.
+---@param name string vim.pack plugin name
 ---@return boolean
 function M.load_plugin(name)
-  if not M.has_plugin(name) then
-    return false
-  end
-
-  local ok, lazy = pcall(require, "lazy")
-  if not ok then
-    return false
-  end
-
-  lazy.load({ plugins = { name } })
-  return true
+  return M.has_plugin(name) and require("traap.core.plugin").load(name)
 end
 
 ---Run a callback after a plugin has been loaded successfully.

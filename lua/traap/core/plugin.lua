@@ -1,7 +1,13 @@
 local M = {}
 
-function M.load(name)
-  return pcall(vim.pack.load, name)
+
+function M.load(kname)
+  return pcall(vim.cmd.packadd, name)
+end
+
+function M.has(name)
+  local ok, plugins = pcall(vim.pack.get, { name }, { info = false })
+  return ok and #plugins == 1
 end
 
 function M.require(module_name)
