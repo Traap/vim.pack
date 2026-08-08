@@ -51,6 +51,30 @@ The custom package helpers use `:packadd` to activate optional packages on
 demand. The Snacks dashboard reports the active and installed package counts,
 along with the elapsed configuration startup time.
 
+## Plugin Customizations
+
+### todo-comments.nvim
+
+Two custom todo categories are merged with the plugin defaults. Matching is
+case-sensitive, so each accepted spelling is configured explicitly:
+
+```text
+YouTube: canonical YouTube marker
+Youtube: alternate YouTube marker
+youtube: lowercase YouTube marker
+URL: canonical URL marker
+Url: alternate URL marker
+url: lowercase URL marker
+```
+
+These markers use custom Nerd Font icons and colors: red (`#ff0000`) for
+YouTube and purple (`#7711FF`) for URL. Highlighting is enabled in ordinary
+text as well as syntax comments, allowing markers in Markdown documents such
+as this README. `<leader>fy` searches the project for all six spellings and
+opens the results in the quickfix list.
+
+Default categories such as `TODO:`, `BUG:`, and `FIX:` remain available.
+
 ## Configuration overview
 
 - `init.lua` adds the checkout to `runtimepath` and loads options, packages,

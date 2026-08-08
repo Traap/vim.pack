@@ -6,4 +6,7 @@ plugin.setup("todo-comments.nvim", "todo-comments", {
     YouTube = { icon = " ", color = "#ff0000", alt = { "youtube", "Youtube" } },
     URL = { icon = " ", color = "#7711FF", alt = { "Url", "url" } },
   },
+  highlight = {
+    comments_only = false,
+  },
 })

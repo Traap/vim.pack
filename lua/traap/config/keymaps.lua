@@ -468,7 +468,7 @@ end
 if platform.has_plugin("todo-comments.nvim") then
   keymap("n", "<leader>fy", function()
     platform.with_loaded_plugin("todo-comments.nvim", function()
-      vim.cmd("TodoQuickFix keywords=YouTube,URL")
+      vim.cmd("TodoQuickFix keywords=YouTube,Youtube,youtube,URL,Url,url")
     end)
   end, { desc = "Find YouTube and URL comments" })
 end
